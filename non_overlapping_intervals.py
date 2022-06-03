@@ -38,5 +38,6 @@ class Solution:
 # https://leetcode.com/problems/non-overlapping-intervals/discuss/2081336/Python-O(n-log-n)-or-O(1)
 # https://leetcode.com/problems/non-overlapping-intervals/discuss/2095068/Easy-Python-solution-with-detailed-explanation
 
+# This problem can be converted to a Vertex Cover problem, which however is NP hard :D
 
 assert Solution().eraseOverlapIntervals([[1, 100], [11, 22], [1, 11], [2, 12]]) == 2

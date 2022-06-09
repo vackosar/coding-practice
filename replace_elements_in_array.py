@@ -1,5 +1,6 @@
 from typing import List
 
+# https://leetcode.com/problems/replace-elements-in-an-array/submissions/
 
 class Solution:
     def arrayChange(self, nums: List[int], operations: List[List[int]]) -> List[int]:

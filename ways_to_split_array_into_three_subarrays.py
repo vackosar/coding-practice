@@ -2,6 +2,9 @@ from math import floor, ceil
 from typing import List
 
 
+# https://leetcode.com/problems/ways-to-split-array-into-three-subarrays/
+# better solution https://leetcode.com/problems/ways-to-split-array-into-three-subarrays/discuss/999257/C%2B%2BJavaPython-O(n)-with-picture
+    # just remember that moving l to right can only mean increase in both min_r and max_r. So you can store progress in those.
 class Solution:
     def waysToSplit(self, nums: List[int]) -> int:
         """
@@ -45,9 +48,14 @@ class Solution:
                 continue
 
             min_r = self.search(nums, l, r_search_l, r_search_r, go_left=True)
+            if min_r is None:
+                continue
+
             max_r = self.search(nums, l, r_search_l, r_search_r, go_left=False)
-            if min_r is not None and max_r is not None:
-                n_solutions += max_r - min_r + 1
+            if max_r is None:
+                continue
+
+            n_solutions += max_r - min_r + 1
 
         return n_solutions
 
@@ -83,7 +91,7 @@ class Solution:
             else:
                 # default go left
                 if is_last:
-                    print(go_left, nums[0:l + 1], nums[l + 1: current_r + 1], nums[current_r + 1:])
+                    # print(go_left, nums[0:l + 1], nums[l + 1: current_r + 1], nums[current_r + 1:])
                     # solutions.append((l, current_r))
                     return current_r
 

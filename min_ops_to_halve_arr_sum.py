@@ -1,7 +1,7 @@
 import heapq
 from typing import List
 
-
+# https://leetcode.com/problems/minimum-operations-to-halve-array-sum/
 class Solution:
 
     def halveArray(self, nums: List[int]) -> int:
@@ -25,7 +25,9 @@ class Solution:
         Memory space needed is constant.
 
         """
+
         original_sum = sum(nums)
+        target_max_sum = original_sum / 2
         nums = [float(-n) for n in nums]
         heapq.heapify(nums)
 
@@ -34,9 +36,9 @@ class Solution:
 
         current_sum = original_sum
         n_operations = 0
-        while current_sum * 2 > original_sum:
+        while current_sum > target_max_sum:
             neg_biggest = heapq.heappop(nums)
-            current_sum -= -neg_biggest /2
+            current_sum += neg_biggest / 2
             heapq.heappush(nums, neg_biggest / 2)
             n_operations += 1
 

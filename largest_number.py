@@ -14,7 +14,7 @@ class Solution:
 
         First we need to think about how we will be constructing the string.
         The simplest way to think about is to work from the lowest part to the biggest,
-        If we build from the lowest digits, we don't have to thing about changing meaning of digit due to appending integers of different length.
+        If we build from the lowest digits, we don't have to think about changing meaning of digit due to appending integers of different length.
 
         How to then select the right integer?
         We need integer X, such that if we concat any other integer before it, we will produce bigger number, than if we put the integer X before that integer.

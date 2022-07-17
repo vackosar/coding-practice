@@ -12,8 +12,6 @@ class Solution:
         This can be solved via dynamic programming.
         We could build up to the desired amount step by step, while remembering how many coins where required.
         Eventually we get to desired amount.
-        We may improve on the step by step by combining with the greedy idea above, and make bigger steps first,
-        but that solution is not covered here.
 
         """
 

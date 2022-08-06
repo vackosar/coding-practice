@@ -15,6 +15,8 @@ class ListNode:
 
 class LRUCache:
     """
+    https://leetcode.com/problems/lru-cache/
+    
     For O(1) access using a key a hash map is used.
     A doubly linked list is used to keep the access recency ordering, because it has complexity of O(1) for operations of remove from head, append to tail, and remove middle item.
 

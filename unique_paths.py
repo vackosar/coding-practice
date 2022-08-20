@@ -47,7 +47,8 @@ class Solution:
         # Dynamic Programming Memoization
         Let's start from the goal position and calculate back memorizing the path counts instead.
         This reduces time to linear complexity, as we don't recalculate what we already visited.
-
+        We always need to have previous row results available to calculate the current row.
+        So, memory complexity of this solution can be further reduced by only remembering the current row and previous row to O(M).
         """
 
         self.m = m
@@ -73,3 +74,11 @@ class Solution:
                 self.n_paths[i][j] = n_paths_from_here
 
         return self.n_paths[0][0]
+
+
+"""
+Like and follow me at https://vaclavkosar.com/
+
+Additional Solutions:
+https://leetcode.com/problems/unique-paths/discuss/254228/Python-3-solutions%3A-Bottom-up-DP-Math-Picture-Explained-Clean-and-Concise
+"""

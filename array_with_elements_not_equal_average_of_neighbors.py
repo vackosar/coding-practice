@@ -37,13 +37,16 @@ class Solution:
         # Smaller than Median on Odd and Bigger on Even in Linear Time
 
         To be faster than sort. We need linear time to find median.
-        There is a recursive algo, which reduces the
+        There is an algorithm called quickselect, which can do this on average O(n) time and O(1) space.
+        It does this by picking a number and then counting number of bigger and smaller numbers.
+        Then it recurses into one of the arrays to find the median.
+        The reason why it is complexity of N on average, is because the sum of series 1/2 + 1/4 + ... is 1.
+        The worst case is N**2, because it may happen that we will pick a bad number each time.
+        You can read more about quickselect here: https://en.wikipedia.org/wiki/Quickselect
 
         """
 
-
-        # This is implementation of "Swapping Sorted If Problem Found" in above.
-
+        # This is implementation of "Swapping Sorted If A Problem Found" in above.
         if len(nums) <= 2:
             return nums
 

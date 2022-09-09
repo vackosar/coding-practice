@@ -39,4 +39,5 @@ class Solution:
 
         return n_flips
 
+
 assert Solution().minFlips(2, 6, 5) == 3

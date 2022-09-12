@@ -31,6 +31,24 @@ class Solution:
         return ' '.join(output_words)
 
 
+        # Regex FindIter Generator Solution
+
+        discount_multiplier = (1.0 - discount / 100.0)
+        regex = re.compile(r'(\$([0-9]+)|[^ ]+)( +|$)')
+        def match_to_word(match):
+            groups = match.groups()
+            if groups[1] is not None:
+                price = int(groups[1])
+                d_price = discount_multiplier * price
+                word = f"${d_price:.2f}"
+
+            else:
+                word = groups[0]
+
+            return word
+
+        return ' '.join(match_to_word(match) for match in regex.finditer(sentence))
+
         """
 
         # Python Split and Isdigit
@@ -49,3 +67,5 @@ class Solution:
 
 
 assert "there are $0.50 $1.00 and 5$ candies in the shop" == Solution().discountPrices("there are $1 $2 and 5$ candies in the shop", 50)
+assert "1 2 $0.00 4 $0.00 $0.00 7 8$ $0.00 $10$" == Solution().discountPrices("1 2 $3 4 $5 $6 7 8$ $9 $10$", 100)
+# Subscribe at https://vaclavkosar.com/

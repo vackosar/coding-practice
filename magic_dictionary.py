@@ -67,7 +67,6 @@ class CharNode:
                 return False
 
 
-
 md = MagicDictionary()
 call_with_inputs(md, ["buildDict", "search", "search", "search", "search"],
                  [[["hello", "leetcode"]], ["hello"], ["hhllo"], ["hell"], ["leetcoded"]],

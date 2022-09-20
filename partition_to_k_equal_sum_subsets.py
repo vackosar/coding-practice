@@ -16,7 +16,7 @@ class Solution:
 
         # Backtracking
         Inspired by [this solution](https://leetcode.com/problems/partition-to-k-equal-sum-subsets/discuss/146579/Easy-python-28-ms-beats-99.5).
-        
+
         """
 
         # It is the best to iterate from the biggest numbers,
@@ -54,8 +54,14 @@ class Solution:
                     sums[bucket_i] -= num
                     # If we worked with empty bucket all other further buckets are empty.
                     # If the number cannot be placed into this empty bucket, it cannot be placed into others either.
-                    if sums[bucket_i] == 0:
+                    # if sums[bucket_i] == 0:
+                    #  return False
+
+                    # The same way we can exploit symmetry, when all other buckets have the same sum.
+                    if bucket_i < k - 1 and sums[bucket_i + 1:].count(sums[bucket_i]) == k - 1 - bucket_i:
                         return False
+
+                    # Additionally we could do memorization of solutions that did not work.
 
             return False
 

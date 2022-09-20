@@ -19,7 +19,9 @@ class Solution:
         
         """
 
-        # Likely it is the best to iterate from the biggest number.
+        # It is the best to iterate from the biggest numbers,
+        # because those cut off bad solutions close to the root of the decision search.
+        # We save lots of time not repeating not trying the bad solutions again as if they are close to leaves.
         nums.sort(reverse=True)
         total_sum = sum(nums)
 

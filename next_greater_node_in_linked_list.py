@@ -6,40 +6,36 @@ from utils import list_to_nodes, ListNode
 class Solution:
     def nextLargerNodes(self, head: Optional[ListNode]) -> List[int]:
         """
-        Return array where for each node there is a next bigger value following the nodes position.
+        Input is a linked list.
+        Return an array where for each input value there is a next strictly bigger value within the list or zero.
 
 
         # Brute force
         On each step iterate over entire array looking for nodes that are zero, and setting a bigger value.
+        Memory complexity O(N). Time complexity at worst O(N * N). Not parallelized.
 
-        # Set
-        Keep a set of nodes with their indexes, for which we are yet to find bigger value.
-        Once found set to result array once.
-
-
+        # Stack
+        Keep a set of nodes with their indexes, for which we are yet to find bigger value in a sorted stack.
+        On each new value we will compare with the items in the stack, starting from the smallest values and stopping at a first bigger value.
+        Memory complexity O(N). Time complexity at worst not sure but around O(N * log N). Not parallelized.
         """
 
+        # output
         result = []
-        to_find = []
+
+        # A stack of the values to replace sorted from biggest to the smallest.
+        to_find_stack = []
 
         i = 0
         while head is not None:
+            # Iterate smallest to the biggest while the head contains a bigger value.
+            while to_find_stack and to_find_stack[-1][1] < head.val:
+                j, val = to_find_stack.pop()
+                # Found the first next bigger value.
+                result[j] = head.val
 
-            # Check and set if head contains bigger value. Need to run over a copy not the original set.
-            # Search here would be faster if the to_find set was sorted. Now it can be as much as N.
-            last_smaller_find_index = -1
-            for f_i, (j, val) in enumerate(to_find):
-                if head.val > val:
-                    # Found the first next bigger value.
-                    result[j] = head.val
-                    last_smaller_find_index = f_i
-
-                else:
-                    # head.val <= val
-                    break
-
-            # Append the current value keeping to_find array sorted.
-            to_find = [(i, head.val)] + to_find[last_smaller_find_index + 1:]
+            # Append the current value keeping to_find_stack array sorted.
+            to_find_stack.append((i, head.val))
 
             # Next.
             i += 1

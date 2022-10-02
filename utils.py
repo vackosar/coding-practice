@@ -1,7 +1,77 @@
+from numbers import Number
+from typing import List, Optional
+
+
 class ListNode:
-    def __init__(self, val=0, next=None):
+    def __init__(self, val: Number = 0, next: Optional['ListNode'] = None):
         self.val = val
         self.next = next
+
+    @staticmethod
+    def from_list(arr: list):
+        if len(arr) == 0:
+            return None
+
+        else:
+            head = ListNode(arr[0], None)
+            node = head
+            for n in arr[1:]:
+                new_node = ListNode(n, None)
+                node.next = new_node
+                node = new_node
+
+            return head
+
+
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    @staticmethod
+    def from_level_order_list(l: List[int]):
+        l = list(l)
+        assert l[-1] is not None
+        root = TreeNode(l.pop(0))
+        last_level = [root]
+        while True:
+            current_level = []
+            for i in last_level:
+                if len(l) == 0:
+                    return root
+
+                pop = TreeNode(l.pop(0))
+                if pop.val is not None:
+                    current_level.append(pop)
+                    i.left = pop
+
+                if len(l) == 0:
+                    return root
+
+                pop = TreeNode(l.pop(0))
+                if pop.val is not None:
+                    current_level.append(pop)
+                    i.right = pop
+
+            last_level = current_level
+
+    # def __repr__(self):
+    #     return self.val
+
+
+class ListNodeDoublyLinked:
+
+    def __init__(self, key, value, prev_node: Optional['ListNodeDoublyLinked'], next_node: Optional[
+        'ListNodeDoublyLinked']):
+        self.key = key
+        self.value = value
+        self.next_node = next_node
+        self.prev_node = prev_node
+
+    def __repr__(self):
+        return f'({self.key}: {self.value})'
+
 
 def call_with_inputs(obj, methods, values, expecteds):
     skip_check = False
@@ -14,19 +84,3 @@ def call_with_inputs(obj, methods, values, expecteds):
         actual = getattr(obj, method)(*value)
         if not skip_check:
             assert expected == actual, f"{method}(*{value}) == {actual} != {expected}"
-
-
-def list_to_nodes(arr: list):
-    if len(arr) == 0:
-        return None
-
-    else:
-        head = ListNode(arr[0], None)
-        node = head
-        for n in arr[1:]:
-            new_node = ListNode(n, None)
-            node.next = new_node
-            node = new_node
-
-        return head
-

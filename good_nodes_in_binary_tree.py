@@ -1,14 +1,9 @@
-# Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+from tree_iterator import TreeNode
 
 
-# https://leetcode.com/problems/count-good-nodes-in-binary-tree/
 class Solution:
     def goodNodes(self, root: TreeNode) -> int:
+        # https://leetcode.com/problems/count-good-nodes-in-binary-tree/
         # I can use backtracking with depth first search
         # can recursively travel the tree and check the condition by keeping max value
         # actually I must crawl all nodes as there is no sort

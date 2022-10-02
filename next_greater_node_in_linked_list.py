@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from utils import list_to_nodes, ListNode
+from utils import ListNode
 
 
 class Solution:
@@ -45,7 +45,7 @@ class Solution:
         return result
 
 
-assert Solution().nextLargerNodes(list_to_nodes([2, 7, 4, 3, 5])) == [7, 0, 5, 5, 0]
-assert Solution().nextLargerNodes(list_to_nodes([9, 7, 6, 7, 6, 9])) == [0, 9, 7, 9, 9, 0]
+assert Solution().nextLargerNodes(ListNode.from_list([2, 7, 4, 3, 5])) == [7, 0, 5, 5, 0]
+assert Solution().nextLargerNodes(ListNode.from_list([9, 7, 6, 7, 6, 9])) == [0, 9, 7, 9, 9, 0]
 
 # Software, machine learning and more on various social networks at https://vaclavkosar.com/

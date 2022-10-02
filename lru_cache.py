@@ -3,16 +3,6 @@ from typing import Optional
 from utils import call_with_inputs
 
 
-class ListNode:
-
-    def __init__(self, key, value, prev_node: Optional['ListNode'], next_node: Optional['ListNode']):
-        self.key = key
-        self.value = value
-        self.next_node = next_node
-        self.prev_node = prev_node
-
-    def __repr__(self):
-        return f'({self.key}: {self.value})'
 
 
 class LRUCache:
@@ -52,18 +42,18 @@ class LRUCache:
             else:
                 self.capacity -= 1
 
-            new_node = ListNode(key, value, None, None)
+            new_node = ListNodeDoublyLinked(key, value, None, None)
             self.append(new_node)
             self.dic[key] = new_node
 
-    def move_to_tail(self, node: ListNode):
+    def move_to_tail(self, node: ListNodeDoublyLinked):
         if node is self.tail:
             return
 
         self.remove(node)
         self.append(node)
 
-    def append(self, node: ListNode):
+    def append(self, node: ListNodeDoublyLinked):
         if self.head is None and self.tail is None:
             self.head = node
             self.tail = node
@@ -73,7 +63,7 @@ class LRUCache:
         self.tail.next_node = node
         self.tail = node
 
-    def remove(self, node: ListNode):
+    def remove(self, node: ListNodeDoublyLinked):
         if self.head is node:
             self.head = node.next_node
 

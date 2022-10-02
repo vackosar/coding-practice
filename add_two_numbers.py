@@ -1,11 +1,8 @@
 # Definition for singly-linked list.
 from typing import Optional
 
+from utils import ListNode
 
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
 
 # https://leetcode.com/problems/add-two-numbers/solution/
 class Solution:

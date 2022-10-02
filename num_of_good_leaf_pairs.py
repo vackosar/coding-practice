@@ -1,42 +1,7 @@
 # Definition for a binary tree node.
 from typing import List
 
-
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
-    @staticmethod
-    def from_level_order_list(l: List[int]):
-        l = list(l)
-        assert l[-1] is not None
-        root = TreeNode(l.pop(0))
-        last_level = [root]
-        while True:
-            current_level = []
-            for i in last_level:
-                if len(l) == 0:
-                    return root
-
-                pop = TreeNode(l.pop(0))
-                if pop.val is not None:
-                    current_level.append(pop)
-                    i.left = pop
-
-                if len(l) == 0:
-                    return root
-
-                pop = TreeNode(l.pop(0))
-                if pop.val is not None:
-                    current_level.append(pop)
-                    i.right = pop
-
-            last_level = current_level
-
-    # def __repr__(self):
-    #     return self.val
+from utils import TreeNode
 
 
 # https://leetcode.com/problems/number-of-good-leaf-nodes-pairs/

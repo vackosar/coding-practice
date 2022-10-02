@@ -20,7 +20,7 @@ class Solution:
         # BFS with a Level Marker
 
         Queue with each node to be processed to have a marker, which level it is from to switch between the rules.
-        Complexity time O(N), memory O(N).
+        Complexity time O(N), memory O(log(N)).
 
         """
 

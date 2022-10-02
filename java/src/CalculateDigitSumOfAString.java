@@ -15,10 +15,12 @@ class CalculateDigitSumOfAString {
             while (s.length() > k) {
                 StringBuilder nextS = new StringBuilder();
                 for (int i = 0; i < Math.ceil(s.length() / (float) k); i++) {
+                    // split into chunks
                     int endIndex = Math.min((i + 1) * k, s.length());
                     String substring = s.substring(i * k, endIndex);
                     int sum = 0;
                     for (int j = 0; j < substring.length(); j++) {
+                        // Byte encoding of digit characters can be reverted by substracting offset of the zero character.
                         sum += s.charAt(i * k + j) - '0';
                     }
                     nextS.append(sum);

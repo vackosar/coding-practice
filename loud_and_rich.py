@@ -45,15 +45,17 @@ class Solution(object):
             q_i: index of the source of the quietness
             """
 
-            current_q = output_q[i]
-            if current_q is None or current_q > q:
+            current = output_q[i]
+            if current is None or current > q:
                 output_q[i] = q
                 output[i] = q_i
                 for poorer_i in richer_than_map[i]:
                     recurse(poorer_i, q, q_i)
 
-        # Thanks to the sort we are iterating over the most loud first and so recursion will be increasingly shallow.
-        for i, q in sorted(((i, quietness) for i, quietness in enumerate(quiet)), key=lambda x: x[1]):
+        # for i, q in sorted(((i, quietness) for i, quietness in enumerate(quiet)), key=lambda x: x[1]):
+        #   recurse(i, q, i)
+
+        for i, q in ((i, quietness) for i, quietness in enumerate(quiet)):
             recurse(i, q, i)
 
         return output

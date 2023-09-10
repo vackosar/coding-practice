@@ -1,3 +1,4 @@
+from collections import deque
 from numbers import Number
 from typing import List, Optional
 
@@ -56,8 +57,41 @@ class TreeNode:
 
             last_level = current_level
 
-    # def __repr__(self):
-    #     return self.val
+    def to_level_order_list(self):
+        # Empty list to store the node values
+        result = []
+
+        # Create a deque for BFS
+        q = deque()
+        q.append(self)
+
+        while q:
+            # Dequeue an item from queue
+            node = q.popleft()
+
+            if node is None:
+                result.append(None)
+                continue
+
+            result.append(node.val)
+
+            # Enqueue left child
+            if node.left is not None:
+                q.append(node.left)
+            else:
+                q.append(None)
+
+            # Enqueue right child
+            if node.right is not None:
+                q.append(node.right)
+            else:
+                q.append(None)
+
+        # Remove trailing None values
+        while result and result[-1] is None:
+            result.pop()
+
+        return result
 
 
 class ListNodeDoublyLinked:
@@ -84,3 +118,6 @@ def call_with_inputs(obj, methods, values, expecteds):
         actual = getattr(obj, method)(*value)
         if not skip_check:
             assert expected == actual, f"{method}(*{value}) == {actual} != {expected}"
+
+
+assert TreeNode.from_level_order_list([1, 3, None, None, 2]).to_level_order_list() == [1, 3, None, None, 2]

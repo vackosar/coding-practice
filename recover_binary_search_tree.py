@@ -39,8 +39,10 @@ class Solution(object):
                 root.right.val, root.val = root.val, root.right.val
                 return True
 
-        # FIXME missing comparion of the right and the left that would take 2 swaps
-
+        elif root.left is not None and root.right is not None and root.left.val > root.right.val:
+            # Compare the right and the left first, because otherwise we would swap with the middle incorrectly.
+            root.left.val, root.right.val = root.right.val, root.left.val
+            return True
 
         elif root.left is not None and root.left.val is not None and root.left.val > root.val:
             root.left.val, root.val = root.val, root.left.val

@@ -78,3 +78,12 @@ assert (Solution()
         .recoverTree(TreeNode.from_level_order_list([3, 5, 1, None, None, 4]))
         .to_level_order_list()
         == [3, 1, 5, None, None, 4])
+
+
+
+# print (Solution()
+#         .recoverTree(TreeNode.from_level_order_list([3,1,4,None,None,2]))
+#         .to_level_order_list())
+#
+#
+

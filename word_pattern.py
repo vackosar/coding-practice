@@ -48,3 +48,8 @@ assert not Solution().wordPattern(pattern ="abba", s ="dog cat cat fish")
 assert Solution().wordPattern(pattern="e", s="eukera")
 assert Solution().wordPattern("abba", "dog cat cat dog")
 assert not Solution().wordPattern("abba", "dog cat dog cat")
+
+
+"""
+Like and follow me at https://vaclavkosar.com/
+"""

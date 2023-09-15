@@ -39,3 +39,6 @@ class Solution:
             node = node.next
 
         return new_head
+
+
+# Follow me for more software and machine learning at https://vaclavkosar.com/

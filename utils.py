@@ -23,6 +23,30 @@ class ListNode:
 
             return head
 
+    @staticmethod
+    def to_list(node: 'ListNode') -> list:
+        """
+        >>> ListNode.to_list(ListNode.from_list([1,2,3]))
+        [1, 2, 3]
+        """
+
+        if node is None:
+            return []
+
+        else:
+            result = []
+            while node is not None:
+                result.append(node.val)
+                node = node.next
+
+            return result
+
+    def __repr__(self):
+        return f'({self.val}, {self.next})'
+
+    def __eq__(self, other):
+        return self.val == other.val and self.next == other.next
+
 
 class TreeNode:
     def __init__(self, val=0, left=None, right=None):

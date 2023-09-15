@@ -19,6 +19,8 @@ class Solution:
 
         >>> ListNode.to_list(Solution().removeElements(head=ListNode.from_list([]), val=1))
         []
+
+        Follow me for more software and machine learning at https://vaclavkosar.com/
         """
 
         new_head = head
@@ -41,4 +43,3 @@ class Solution:
         return new_head
 
 
-# Follow me for more software and machine learning at https://vaclavkosar.com/

@@ -1,3 +1,4 @@
+from itertools import product
 from typing import List
 
 
@@ -8,7 +9,9 @@ class Solution:
         Return the aggregate largest values in a sliding window of (3, 3) in matrix of (n-2,n-2).
         In another word, find the largest value in each position of 3x3 window (e.g. (1,1), or (2, 3), ...) across the matrix and return it.
 
-        The simplest approach is to iterate over the window positions.
+        The simplest approach is to iterate over the window positions O(N).
+
+        Ordinary iterating will be slow due to Python. Better is to use comprehensions.
 
         >>> Solution().largestLocal([[1,2,3],[4,5,6],[7,8,9]])
         [[9]]
@@ -21,19 +24,10 @@ class Solution:
         """
 
         n = len(grid)
+        output = [[0] * (n - 2) for _ in range(n - 2)]
 
-        output = []
-        for i in range(n - 2):
-            output.append(list(range(n - 2)))
-
-        for i in range(1, len(grid) - 1):
-            for j in range(1, len(grid) - 1):
-                max_val = max(
-                    max(grid[i - 1][j - 1:j + 2]),
-                    max(grid[i    ][j - 1:j + 2]),
-                    max(grid[i + 1][j - 1:j + 2])
-                )
-                output[i - 1][j - 1] = max_val
+        for i, j in product(range(1, n - 1), range(1, n - 1)):
+            output[i - 1][j - 1] = max(grid[r][c] for r, c in product(range(i - 1, i + 2), range(j - 1, j + 2)))
 
         return output
 

@@ -1,6 +1,7 @@
 from itertools import product
 from typing import List
 
+## Follow me for more software and machine learning at https://vaclavkosar.com/
 
 class Solution:
     def largestLocal(self, grid: List[List[int]]) -> List[List[int]]:

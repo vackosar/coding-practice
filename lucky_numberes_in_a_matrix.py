@@ -22,7 +22,7 @@ class Solution:
 
         The simplest would be to brute force.
         The second simplest would be to find first the maximums and minimums and find indexes where these match.
-        Because the values are distinct we don't have to worry about multiple maximums.
+        Because the values are distinct, we don't have to worry about multiple maximums.
 
         """
 

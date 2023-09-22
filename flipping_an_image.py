@@ -8,7 +8,7 @@ class Solution:
         Given (n,n) square image, flip it horizonatally, invert it (1-x) and return result.
 
         >>> Solution().flipAndInvertImage([[1,1,0]])
-        [[0, 0, 1]]
+        [[1, 0, 0]]
 
         >>> Solution().flipAndInvertImage([[1, 1, 0], [1, 0, 1], [0, 0, 1]])
         [[1, 0, 0], [0, 1, 0], [0, 1, 1]]

@@ -55,9 +55,9 @@ class TreeNode:
         self.right = right
 
     @staticmethod
-    def from_level_order_list(l: List[int]):
-        l = list(l)
-        assert l[-1] is not None
+    def from_level_order_list(input_list: List[int]):
+        l = list(input_list)
+        # assert l[-1] is not None
         root = TreeNode(l.pop(0))
         last_level = [root]
         while True:
@@ -78,6 +78,9 @@ class TreeNode:
                 if pop.val is not None:
                     current_level.append(pop)
                     i.right = pop
+
+                if len(l) == 0:
+                    return root
 
             last_level = current_level
 
@@ -145,3 +148,7 @@ def call_with_inputs(obj, methods, values, expecteds):
 
 
 assert TreeNode.from_level_order_list([1, 3, None, None, 2]).to_level_order_list() == [1, 3, None, None, 2]
+# trailing values are ignored
+assert TreeNode.from_level_order_list([1, None, None]).to_level_order_list() == [1]
+assert TreeNode.from_level_order_list([1]).to_level_order_list() == [1]
+assert  TreeNode.from_level_order_list([3, 9, 20, None, None, 15, 7]).to_level_order_list() == [3, 9, 20, None, None, 15, 7]

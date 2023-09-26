@@ -12,19 +12,24 @@ class Solution:
         While removing the middle duplicates lead to faster results, because we can remove the characters in pairs.
 
         >>> Solution().minimizedStringLength("aikadua")
-        4
+        5
+
         # Explanation: I would select the middle "a" to remove. len("ikdu")
+
 
         >>> Solution().minimizedStringLength("aaabc")
         3
+
         # len("abc")
 
 
         >>> Solution().minimizedStringLength("cbbd")
-        "cbd"
+        3
+
 
         >>> Solution().minimizedStringLength("dddaaa")
         2
+
         # len("abc")
 
 

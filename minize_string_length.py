@@ -14,7 +14,7 @@ class Solution:
         >>> Solution().minimizedStringLength("aikadua")
         5
 
-        # Explanation: I would select the middle "a" to remove. len("ikdu")
+        # Explanation: I would select the middle "a" to remove. len("ikadu")
 
 
         >>> Solution().minimizedStringLength("aaabc")

@@ -31,8 +31,9 @@ class Solution:
         top_3 = list(sorted(top_3, reverse=True))[:3]
         ```
 
-        The fastest would be to keep only the top 3. That would give O(N), O(N).
+        The fastest would be to keep only the top 3. That would give O(N), O(1).
         But we can't do that in slow Python, better call a fast library `heapq.nlargest`.
+        The nlargest documentation: https://github.com/python/cpython/blob/main/Lib/heapq.py#L397
 
         An edge case is presence 2 large negative numbers and one large positive.
         Imagine these 2 cancel their negativity and together with the positive form the 3 largest.

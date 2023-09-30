@@ -1,5 +1,8 @@
 /* Write your PL/SQL query statement below */
 
+-- Follow Vaclav Kosar for more software and machine learning at https://vaclavkosar.com/
+
+
 /*
 
 You are given ActorDirector tabel with columns actor_id, director_id, timestamp.

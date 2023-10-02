@@ -8,7 +8,7 @@ from typing import List
 class Solution:
     def constructRectangle(self, area: int) -> List[int]:
         """
-        Design a rectangular webpage, whose length is L and width W follows this requirements:
+        Design a rectangular webpage, whose length is L and width W follows these requirements:
         - L * W = area
         - L >= W
         - abs(L - W) should be as small (close) a as possible.

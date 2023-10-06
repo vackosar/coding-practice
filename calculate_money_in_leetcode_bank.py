@@ -1,4 +1,4 @@
-# From Simplest to The Fastest with Unit Tests For Quick Understanding
+# From The Simplest to The Fastest with Unit Tests For Quick Understanding
 # Follow Vaclav Kosar for more software and machine learning at https://vaclavkosar.com/
 
 class Solution:
@@ -83,7 +83,7 @@ class Solution:
         reminder_days = n % 7
         n_full_weeks = n // 7
 
-        full_weeks_sum = sum(i * 7 + 28 for i in range(n_full_weeks))
+        full_weeks_sum = (28 + (n_full_weeks - 1) * 7 + 28) * n_full_weeks // 2
 
         if reminder_days == 0:
             return full_weeks_sum

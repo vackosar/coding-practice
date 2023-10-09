@@ -42,7 +42,7 @@ class Solution:
         We keep our version bad and halve to keep it so.
         Each time check the version on the left.
 
-        As a optimization, we could cache the isBad results in a dictionary.
+        As an optimization, we could cache the isBad results in a dictionary.
 
         """
 

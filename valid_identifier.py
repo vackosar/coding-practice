@@ -29,6 +29,8 @@ Output: False
 
 import re
 
+RESERVED_WORDS = {"Python", "Cobra", "Anaconda"}
+
 validation = re.compile(r'[a-zA-Z_][_a-zA-Z0-9]*')
 
 
@@ -47,7 +49,15 @@ class Solution:
 
         >>> Solution().isValidIdentifier("Python")
         True
+
+        >>> Solution().isValidIdentifier("Cobra")
+        False
+
         """
+        # Check if the identifier is a reserved word
+        if identifier in RESERVED_WORDS:
+            return False
+
         return validation.fullmatch(identifier) is not None
 
 

@@ -48,9 +48,15 @@ class Solution:
         True
 
         >>> Solution().isValidIdentifier("Python")
-        True
+        False
 
         >>> Solution().isValidIdentifier("Cobra")
+        False
+
+        >>> Solution().isValidIdentifier("a123***")
+        False
+
+        >>> Solution().isValidIdentifier("*a123")
         False
 
         """
@@ -62,4 +68,32 @@ class Solution:
 
 
 
+solutions = [
+    ("_" + "Python" * 20, True),
+ ("1234567890"*1000000, False),
+ ("a"*100 + "1234567890"*999, True),
+ ("1Cobra"*200000, False),
+ ("*Anaconda"*200000, False),
+ ("_"*100 + "1234567890"*9999, True),
+ ("a"*1000000 + "_"*999999, True),
+ ("_" + "Python"*200000, True),
+ ("abcde"*1000000 + "1234567890"*999999, True)]
+
+
+import concurrent.futures
+import time
+
+def execute_solution(solution):
+    identifier, expected_result = solution
+    start_time = time.perf_counter()
+    result = Solution().isValidIdentifier(identifier)
+    end_time = time.perf_counter()
+    assert result == expected_result, f"For identifier {identifier}, expected {expected_result} but got {result}"
+    return end_time - start_time
+
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as executor:
+    times = executor.map(execute_solution, solutions)
+
+for i, solution, execution_time in zip(range(len(solutions)), solutions, times):
+    print(f"Execution time for solution {i} was {execution_time} seconds")
 

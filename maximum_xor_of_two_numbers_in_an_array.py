@@ -119,6 +119,18 @@ class Solution:
         Here below is a simpler solution for this better idea.
 
         We will need to use additional condition that is true to help us find the solution: `c = a ^ b` then `assert (a ^ c == b) and (b ^ c == a)`.
+
+        >>> 5 ^ 7
+        2
+
+        >>> 5 ^ 7 ^ 5
+        7
+
+        >>> 5 ^ 7 ^ 7
+        5
+
+
+
         In our case, we the `c` is the answer, and the condition tells us that the answer
         We can take advantage of a fact that iterating over bit-masks is Log(N), and the fact that we can build the answer bit-by-bit.
         Reading in the previous solution we can see that we are starting with the top bit and only need to verify if there is corresponding another number that does not have that high bit.
@@ -135,12 +147,15 @@ class Solution:
 
         answer_prefix = 0
         for i in range(32)[::-1]:
-            # Bit rotate to longer prefix, to give place for the next bit.
+            # Bit shift to longer prefix, to give place for the next bit.
             answer_prefix <<= 1
             # This extracts all prefixes of len i.
             prefixes = {num >> i for num in nums}
             # This filters for the numbers with the prefix answer_prefix and also checking that we have two ideal numbers to XOR. If not we add 0 to answer_prefix.
-            answer_prefix += any(answer_prefix ^ 1 ^ p in prefixes for p in prefixes)
+            prefix_with_1_on_the_lowest_bit = answer_prefix ^ 1
+            # If we XOR the answer_prefix with any of the other number prefixes, we should get the other number in the XOR, which should be in the prefixes, if it is the correct one.
+            # And because the prefix has 1 on the lowest bit it will tell us if that we can have 1 on that position for the maximum number, otherwise we will set 0 into the answer onto that position.
+            answer_prefix += any(prefix_with_1_on_the_lowest_bit ^ p in prefixes for p in prefixes)
 
         # At this point we have full answer.
         return answer_prefix

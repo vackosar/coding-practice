@@ -86,6 +86,7 @@ class Solution:
         This recursion would lead to a solution of around N*logN speed.
         For this we would need to sort the numbers into buckets by their highest bits. We can find the highest bit with log2 function, but we would like full decomposition.
         So either there is some function for this or we need to iterative divide by 2.
+        I am not confident these concepts are sufficient, so let me first sketch the solution in pseudo-code as a thought experiment.
 
 
         ## Experimental Pseudo-Code Implementation 1:
@@ -111,8 +112,10 @@ class Solution:
 
         ```
 
-        Ok, above is close, because it focuses on the bits and should iterate somewhere around in N * log(N).
-        A problem there is in that it is not clearly explained what happens if we don't have XOR-1 for the highest bit.
+        ## Reasoning Continuation
+
+        Ok, above is close, because it uses the idea of iteration on the bits which should cost around N * log(N).
+        The problem with above is that it is not clearly explained what happens if we don't have XOR-1 for the highest bit.
         Searching twice first in the high-bit-1 numbers and then high-bit-0 numbers or both. In fact we have to merge these into single list.
         We can merge then if we discart the top bit after we find out if we can XOR-1 not there, and then continue looking at the lower bits,
         while making sure that we only look at numbers that fit the pattern of the top-bit.
@@ -129,8 +132,6 @@ class Solution:
         >>> 5 ^ 7 ^ 7
         5
 
-
-
         In our case, we the `c` is the answer, and the condition tells us that the answer
         We can take advantage of a fact that iterating over bit-masks is Log(N), and the fact that we can build the answer bit-by-bit.
         Reading in the previous solution we can see that we are starting with the top bit and only need to verify if there is corresponding another number that does not have that high bit.
@@ -142,7 +143,6 @@ class Solution:
 
 
         # The Solution Implementation:
-
         """
 
         answer_prefix = 0

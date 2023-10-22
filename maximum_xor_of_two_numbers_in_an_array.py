@@ -151,8 +151,9 @@ class Solution:
             answer_prefix <<= 1
             # This extracts all prefixes of len i.
             prefixes = {num >> i for num in nums}
-            # This filters for the numbers with the prefix answer_prefix and also checking that we have two ideal numbers to XOR. If not we add 0 to answer_prefix.
-            prefix_with_1_on_the_lowest_bit = answer_prefix ^ 1
+
+            # We add 1 to the answer_prefix to look for max value below.
+            prefix_with_1_on_the_lowest_bit = answer_prefix + 1
             # If we XOR the answer_prefix with any of the other number prefixes, we should get the other number in the XOR, which should be in the prefixes, if it is the correct one.
             # And because the prefix has 1 on the lowest bit it will tell us if that we can have 1 on that position for the maximum number, otherwise we will set 0 into the answer onto that position.
             answer_prefix += any(prefix_with_1_on_the_lowest_bit ^ p in prefixes for p in prefixes)

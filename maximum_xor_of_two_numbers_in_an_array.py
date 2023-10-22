@@ -9,9 +9,8 @@ class Solution:
         """
         # Problem Description
 
-
         You are given non-empty positive integer array `nums`.
-        Return maximum nums[i] XOR nums[j], where 0 <= i <= j < n.
+        Return maximum of nums[i] XOR nums[j], where 0 <= i <= j < n.
 
         XOR is a bit-wise or logical operation, that is the same as OR except for input (1, 1):
 
@@ -119,6 +118,8 @@ class Solution:
         while making sure that we only look at numbers that fit the pattern of the top-bit.
         Here below is a simpler solution for this better idea.
 
+        We will need to use additional condition that is true to help us find the solution: `c = a ^ b` then `assert (a ^ c == b) and (b ^ c == a)`.
+        In our case, we the `c` is the answer, and the condition tells us that the answer
         We can take advantage of a fact that iterating over bit-masks is Log(N), and the fact that we can build the answer bit-by-bit.
         Reading in the previous solution we can see that we are starting with the top bit and only need to verify if there is corresponding another number that does not have that high bit.
         If we don't find such number answer has to have a zero on that point.

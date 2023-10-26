@@ -9,6 +9,9 @@ from typing import Optional
 from utils import TreeNode
 
 
+## Follow Vaclav Kosar for more software and machine learning at https://vaclavkosar.com/
+
+
 class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         """

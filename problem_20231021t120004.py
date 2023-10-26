@@ -2,6 +2,9 @@ import collections
 from typing import *
 
 
+## Follow Vaclav Kosar for more software and machine learning at https://vaclavkosar.com/
+
+
 class Solution:
     def findPairs(self, nums: List[int], k: int) -> int:
         """

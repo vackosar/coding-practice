@@ -1,3 +1,4 @@
+import bisect
 from typing import List
 
 
@@ -12,20 +13,20 @@ class Solution:
 
         Return Before and After puzzles, which are phrases that are mergers of two phrases where last word of first phrase is the same as the first word of the second phrase. Return all possible puzzles of all different pairs of phrases. Return in sorted lexicographically.
 
-        >>> ["a b", "c d", "b a"]
-        ["a b a"]
+        >>> Solution().beforeAndAfterPuzzles(["a b", "c d", "b a"])
+        ['a b a', 'b a b']
 
-        >>> ["a b", "c d"]
+        >>> Solution().beforeAndAfterPuzzles(["a b", "c d"])
         []
 
-        >>> ["c d", "d c", "b a", "a b"]
-        ["a b a", "c d c"]
+        >>> Solution().beforeAndAfterPuzzles(["c d", "x c", "b y", "a b"])
+        ['a b y', 'x c d']
 
-        >>> ["writing code", "code rocks"]
-        ["writing code rocks"]
+        >>> Solution().beforeAndAfterPuzzles(["writing code", "code rocks"])
+        ['writing code rocks']
 
-        >>> ["a","b","a"]
-        ["a"]
+        >>> Solution().beforeAndAfterPuzzles(["a","b","a"])
+        ['a']
 
 
         # Reasoning about Solution Approaches To Find The Best One
@@ -50,7 +51,7 @@ class Solution:
 
             first[first_word].append((i, phrase))
 
-        # results = OrderedDict()
+        # results = []
         results = set()
         for i, prefix_phrase in enumerate(phrases):
             prefix_phrase_words = prefix_phrase.split(' ')
@@ -63,9 +64,8 @@ class Solution:
                     # prevent the duplicate
                     if i != suffix_phrase_i:
                         results.add((prefix_short + " " + suffix_phrase).strip())
-                        # results[(prefix_short + " " + suffix_phrase).strip()] = 1
+                        # bisect.insort(results, (prefix_short + " " + suffix_phrase).strip())
 
-        # TODO try collections.OrderedDict
         return list(sorted(results))
 
 

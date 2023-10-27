@@ -1,5 +1,4 @@
-import bisect
-from bisect import bisect_right, bisect_left
+from bisect import bisect_left
 from typing import List
 
 
@@ -14,6 +13,8 @@ class Solution:
 
         Return Before and After puzzles, which are phrases that are mergers of two phrases where last word of first phrase is the same as the first word of the second phrase. Return all possible puzzles of all different pairs of phrases. Return in sorted lexicographically.
 
+
+        # Examples Including Edge Cases
         >>> Solution().beforeAndAfterPuzzles(["a b", "c d", "b a"])
         ['a b a', 'b a b']
 

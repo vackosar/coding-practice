@@ -12,6 +12,7 @@ class Solution:
 
         Given an array of integers `nums` and an integer `k`, return the number of unique pairs in the array such that their absolute difference equals to `k`.
 
+
         # Examples Including Edge Cases
 
         >>> Solution().findPairs([1,2,3,4,5], 1)

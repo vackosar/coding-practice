@@ -1,4 +1,5 @@
 import bisect
+from bisect import bisect_right, bisect_left
 from typing import List
 
 
@@ -51,8 +52,9 @@ class Solution:
 
             first[first_word].append((i, phrase))
 
-        # results = []
-        results = set()
+        # We can use both set or sorted list. Sorted list should be a bit faster.
+        results = []
+        # results = set()
         for i, prefix_phrase in enumerate(phrases):
             prefix_phrase_words = prefix_phrase.split(' ')
             last = prefix_phrase_words[-1]
@@ -63,10 +65,11 @@ class Solution:
                 for suffix_phrase_i, suffix_phrase in suffix_list:
                     # prevent the duplicate
                     if i != suffix_phrase_i:
-                        results.add((prefix_short + " " + suffix_phrase).strip())
-                        # bisect.insort(results, (prefix_short + " " + suffix_phrase).strip())
+                        # results.add((prefix_short + " " + suffix_phrase).strip())
+                        s = (prefix_short + " " + suffix_phrase).strip()
+                        lo = bisect_left(results, s, lo=0, hi=None)
+                        if lo == len(results) or results[lo] != s:
+                            results.insert(lo, s)
 
-        return list(sorted(results))
-
-
-
+        # return list(sorted(results))
+        return results

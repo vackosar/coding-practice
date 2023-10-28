@@ -15,19 +15,24 @@ class Solution:
 
         # Examples
 
-        >>> check([51,83,51,40,51,40,51,40,83,40,83,83,51,40,40,51,51,51,40,40,40,83,51,51,40,51,51,40,40,51,51,40,51,51,51,40,83,40,40,83,51,51,51,40,40,40,51,51,83,83,40,51,51,40,40,40,51,40,83,40,83,40,83,40,51,51,40,51,51,51,51,40,51,83,51,83,51,51,40,51,40,51,40,51,40,40,51,51,51,40,51,83,51,51,51,40,51,51,40,40])
-        None
+        # >>> check([51,83,51,40,51,40,51,40,83,40,83,83,51,40,40,51,51,51,40,40,40,83,51,51,40,51,51,40,40,51,51,40,51,51,51,40,83,40,40,83,51,51,51,40,40,40,51,51,83,83,40,51,51,40,40,40,51,40,83,40,83,40,83,40,51,51,40,51,51,51,51,40,51,83,51,83,51,51,40,51,40,51,40,51,40,40,51,51,51,40,51,83,51,51,51,40,51,51,40,40])
+        # None
 
-        >>> check([7,7,7,8,5,7,5,5,5,8])
-        [8, 7, 5, 7, 5, 7, 5, 7, 5, 8]
+        # In this case, we have to be careful about not being left with some last numbers 8. We have to be able to distribute them in.
+        >>> check([7, 7, 7, 8, 5, 7, 5, 5, 5, 8])
+        [7, 5, 8, 7, 5, 8, 7, 5, 7, 5]
 
+        # This is a simple case.
         >>> check([1, 1, 2, 2])
         [1, 2, 1, 2]
 
+        # Many 1s Example
+        # In this case, we have to make sure that all 1s are separated.
         >>> check([1, 1, 1, 1, 2, 2, 3, 3])
         [1, 2, 1, 2, 1, 3, 1, 3]
 
-        >>> check([2,1,1])
+        # This case is complicated for the right order. We have to start with the most common number first.
+        >>> check([2, 1, 1])
         [1, 2, 1]
 
 
@@ -44,8 +49,38 @@ class Solution:
         For example [1, 1, 2, 2, 2, 3, 3, 3] ->  [1, 3, 1, 3, 2, 3, 2, 2]
 
         So instead we need bucketing with counting.
-        Count all numbers, then iteratively mix two different buckets, untill non are left.
+        Count all numbers, then iteratively mix two different buckets, until non are left.
         This will be O(N) time and O(N) space.
+
+        Simple iteration over the buckets is not enough, because when
+        ```
+        counter = Counter(barcodes)
+        keys = list(counter.keys())
+
+        assert len(keys) > 1
+        first_i = 0
+
+        solution = []
+        while True:
+            if len(solution) > 0 and solution[-1] == keys[first_i]:
+                solution.insert(0, keys[first_i])
+                assert len(solution) == len(barcodes)
+                return solution
+
+            solution.append(keys[first_i])
+            counter[keys[first_i]] -= 1
+
+            if len(solution) == len(barcodes):
+                return solution
+
+            while True:
+                first_i += 1
+                if first_i == len(keys):
+                    first_i = 0
+
+                if counter[keys[first_i]] > 0:
+                    break
+        ```
 
 
         # Risks
@@ -82,15 +117,10 @@ class Solution:
 
                 # prevent inserting the last 1 or 2 numbers next to each other
                 if first_i > len(keys) - 1:
-                    if counter[keys[second_i]] == 1:
-                        solution.append(keys[second_i])
-
-                    elif counter[keys[second_i]] == 2:
-                        solution.append(keys[second_i])
-                        solution.insert(0, keys[second_i])
-
-                    else:
-                        raise ValueError
+                    insert_i = 0
+                    while len(solution) < len(barcodes):
+                        solution.insert(insert_i, keys[first_i])
+                        insert_i += 2
 
                     assert len(solution) == len(barcodes)
                     return solution
@@ -108,15 +138,10 @@ class Solution:
 
                 # prevent inserting the last 1 or 2 numbers next to each other
                 if second_i > len(keys) - 1:
-                    if counter[keys[first_i]] == 1:
-                        solution.append(keys[first_i])
-
-                    elif counter[keys[first_i]] == 2:
-                        solution.append(keys[first_i])
-                        solution.insert(0, keys[first_i])
-
-                    else:
-                        raise ValueError
+                    insert_i = 0
+                    while len(solution) < len(barcodes):
+                        solution.insert(insert_i, keys[first_i])
+                        insert_i += 2
 
                     assert len(solution) == len(barcodes)
                     return solution

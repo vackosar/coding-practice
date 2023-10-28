@@ -82,6 +82,8 @@ class Solution:
                     break
         ```
 
+        Another appoach that won't quite work, is when left with some number, trying to simply ditribute it.
+        You have to approach it more generally, because you may be left with more.
 
         # Risks
 

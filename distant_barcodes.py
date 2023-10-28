@@ -64,6 +64,12 @@ class Solution:
 
         solution = []
         while True:
+            if first_i > len(keys) - 1:
+                assert solution[0] != keys[second_i]
+                solution.insert(0, keys[second_i])
+                assert len(solution) == len(barcodes)
+                return solution
+
             solution.append(keys[first_i])
             counter[keys[first_i]] -= 1
 
@@ -72,7 +78,7 @@ class Solution:
 
             if counter[keys[first_i]] == 0:
                 first_i += 1
-                if first_i == second_i:
+                while (first_i == second_i or counter[first_i] == 0) and first_i < len(keys):
                     first_i += 1
 
             if second_i > len(keys) - 1:
@@ -89,7 +95,7 @@ class Solution:
 
             if counter[keys[second_i]] == 0:
                 second_i += 1
-                if first_i == second_i:
+                while (first_i == second_i or counter[second_i] == 0) and second_i < len(keys):
                     second_i += 1
 
 

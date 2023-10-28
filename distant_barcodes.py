@@ -15,6 +15,9 @@ class Solution:
 
         # Examples
 
+        >>> check([51,83,51,40,51,40,51,40,83,40,83,83,51,40,40,51,51,51,40,40,40,83,51,51,40,51,51,40,40,51,51,40,51,51,51,40,83,40,40,83,51,51,51,40,40,40,51,51,83,83,40,51,51,40,40,40,51,40,83,40,83,40,83,40,51,51,40,51,51,51,51,40,51,83,51,83,51,51,40,51,40,51,40,51,40,40,51,51,51,40,51,83,51,51,51,40,51,51,40,40])
+        None
+
         >>> check([7,7,7,8,5,7,5,5,5,8])
         [8, 7, 5, 7, 5, 7, 5, 7, 5, 8]
 
@@ -48,6 +51,8 @@ class Solution:
         # Risks
 
         Not using all the numbers.
+        The two indexes could conflict in various way. They must not use the same counter, they must not overflow.
+        FIXME The two indexes seems like a wrong idea. What if I instead iterated across all at all times?
 
         """
 
@@ -64,12 +69,6 @@ class Solution:
 
         solution = []
         while True:
-            if first_i > len(keys) - 1:
-                assert solution[0] != keys[second_i]
-                solution.insert(0, keys[second_i])
-                assert len(solution) == len(barcodes)
-                return solution
-
             solution.append(keys[first_i])
             counter[keys[first_i]] -= 1
 
@@ -78,14 +77,23 @@ class Solution:
 
             if counter[keys[first_i]] == 0:
                 first_i += 1
-                while (first_i == second_i or counter[first_i] == 0) and first_i < len(keys):
+                while first_i < len(keys) and (first_i == second_i or counter[keys[first_i]] == 0):
                     first_i += 1
 
-            if second_i > len(keys) - 1:
-                assert solution[0] != keys[first_i]
-                solution.insert(0, keys[first_i])
-                assert len(solution) == len(barcodes)
-                return solution
+                # prevent inserting the last 1 or 2 numbers next to each other
+                if first_i > len(keys) - 1:
+                    if counter[keys[second_i]] == 1:
+                        solution.append(keys[second_i])
+
+                    elif counter[keys[second_i]] == 2:
+                        solution.append(keys[second_i])
+                        solution.insert(0, keys[second_i])
+
+                    else:
+                        raise ValueError
+
+                    assert len(solution) == len(barcodes)
+                    return solution
 
             solution.append(keys[second_i])
             counter[keys[second_i]] -= 1
@@ -95,8 +103,23 @@ class Solution:
 
             if counter[keys[second_i]] == 0:
                 second_i += 1
-                while (first_i == second_i or counter[second_i] == 0) and second_i < len(keys):
+                while second_i < len(keys) and (first_i == second_i or counter[keys[second_i]] == 0):
                     second_i += 1
+
+                # prevent inserting the last 1 or 2 numbers next to each other
+                if second_i > len(keys) - 1:
+                    if counter[keys[first_i]] == 1:
+                        solution.append(keys[first_i])
+
+                    elif counter[keys[first_i]] == 2:
+                        solution.append(keys[first_i])
+                        solution.insert(0, keys[first_i])
+
+                    else:
+                        raise ValueError
+
+                    assert len(solution) == len(barcodes)
+                    return solution
 
 
 def check(barcodes: List[int]):

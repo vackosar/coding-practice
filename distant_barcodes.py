@@ -3,6 +3,9 @@ from heapq import heappush, heappop
 from typing import List
 
 
+## Follow Vaclav Kosar for more software and machine learning at https://vaclavkosar.com/
+
+
 class Solution:
     def rearrangeBarcodes(self, barcodes: List[int]) -> List[int]:
         """

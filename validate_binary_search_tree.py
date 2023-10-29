@@ -23,6 +23,7 @@ class Solution:
         - and the right subtree values are more than the root value,
         - and all subtrees are valid.
 
+        # Examples Including Edge Cases
         >>> Solution().isValidBST(TreeNode(2, TreeNode(1), TreeNode(3)))
         True
 

@@ -1,8 +1,6 @@
 from collections import Counter
+from heapq import heappush, heappop
 from typing import List
-
-
-# FIXME NOT DONE
 
 
 class Solution:
@@ -13,35 +11,35 @@ class Solution:
         Return the solution, which is guaranteed to exist.
 
 
-        # Examples
+        # Examples Including Edge Cases
 
-        # >>> check([51,83,51,40,51,40,51,40,83,40,83,83,51,40,40,51,51,51,40,40,40,83,51,51,40,51,51,40,40,51,51,40,51,51,51,40,83,40,40,83,51,51,51,40,40,40,51,51,83,83,40,51,51,40,40,40,51,40,83,40,83,40,83,40,51,51,40,51,51,51,51,40,51,83,51,83,51,51,40,51,40,51,40,51,40,40,51,51,51,40,51,83,51,51,51,40,51,51,40,40])
-        # None
+        >>> check([51,83,51,40,51,40,51,40,83,40,83,83,51,40,40,51,51,51,40,40,40,83,51,51,40,51,51,40,40,51,51,40,51,51,51,40,83,40,40,83,51,51,51,40,40,40,51,51,83,83,40,51,51,40,40,40,51,40,83,40,83,40,83,40,51,51,40,51,51,51,51,40,51,83,51,83,51,51,40,51,40,51,40,51,40,40,51,51,51,40,51,83,51,51,51,40,51,51,40,40])
 
         # In this case, we have to be careful about not being left with some last numbers 8. We have to be able to distribute them in.
+        # Example solution: [7, 5, 8, 7, 5, 8, 7, 5, 7, 5]
         >>> check([7, 7, 7, 8, 5, 7, 5, 5, 5, 8])
-        [7, 5, 8, 7, 5, 8, 7, 5, 7, 5]
 
         # This is a simple case.
+        # Example solution [1, 2, 1, 2]
         >>> check([1, 1, 2, 2])
-        [1, 2, 1, 2]
 
         # Many 1s Example
         # In this case, we have to make sure that all 1s are separated.
+        # Example solution: [1, 2, 1, 2, 1, 3, 1, 3]
         >>> check([1, 1, 1, 1, 2, 2, 3, 3])
-        [1, 2, 1, 2, 1, 3, 1, 3]
+
 
         # This case is complicated for the right order. We have to start with the most common number first.
+        # Example solution: [1, 2, 1]
         >>> check([2, 1, 1])
-        [1, 2, 1]
 
 
-        # Approaches
+        # Reasoning about Solution Approaches To Find The Best One Of The Correct Once
 
-        It is not possible to do this if there is more than halve of one identical number in the array.
-        Otherwise we can simply always be odd-even mixing two different numbers next to each other.
+        It is not possible to do this if there is more than half of one identical number in the array.
+        Otherwise, we can simply always be odd-even mixing two different numbers next to each other.
 
-        Brute force would be on each new number to iterate across others and try to find non equal.
+        Brute force would be on each new number to iterate across others and try to find non-equal.
         Faster is use some sort or bucketing.
 
         The sort itself with odd from start and even from the end won't work,
@@ -52,101 +50,68 @@ class Solution:
         Count all numbers, then iteratively mix two different buckets, until non are left.
         This will be O(N) time and O(N) space.
 
-        Simple iteration over the buckets is not enough, because when
-        ```
-        counter = Counter(barcodes)
-        keys = list(counter.keys())
+        A round-robin iteration over the buckets in a round  is not enough, because if we have a number that is there many times, it fill fail:
 
-        assert len(keys) > 1
-        first_i = 0
+        Another approach is to have 2 indexes that are the most common and mix those.
+        The two indexes is wrong idea, because if you don't prioritize the most common numbers,
+        you are not solving the problem recursively and the rules that you expect stop holding.
+        In this case you may be using less common numbers first, and end up with some numbers left without ability to mix them.
+        You could remix ditribute them back to the existing result, because those were not used at the beginning, but it is complex.
 
-        solution = []
-        while True:
-            if len(solution) > 0 and solution[-1] == keys[first_i]:
-                solution.insert(0, keys[first_i])
-                assert len(solution) == len(barcodes)
-                return solution
+        The correct approach is to make sure we are using up the most common numbers at all times.
+        We can do that with keeping sort with a heap.
+        We mix them in even-odd making sure we never append the same numbers.
 
-            solution.append(keys[first_i])
-            counter[keys[first_i]] -= 1
+        Inspiration: https://leetcode.com/problems/distant-barcodes/solutions/2497111/82-tc-easy-python-solution/
 
-            if len(solution) == len(barcodes):
-                return solution
-
-            while True:
-                first_i += 1
-                if first_i == len(keys):
-                    first_i = 0
-
-                if counter[keys[first_i]] > 0:
-                    break
-        ```
-
-        Another appoach that won't quite work, is when left with some number, trying to simply ditribute it.
-        You have to approach it more generally, because you may be left with more.
 
         # Risks
 
         Not using all the numbers.
         The two indexes could conflict in various way. They must not use the same counter, they must not overflow.
-        FIXME The two indexes seems like a wrong idea. What if I instead iterated across all at all times?
-
+        Pushing back to sorted heap too early, making impossible to find the second most common number.
         """
 
-        if len(barcodes) == 1:
-            return barcodes
-
+        # Count the numbers into a counter dictionary.
         counter = Counter(barcodes)
-        keys = [key for key, value in sorted(counter.items(), key=lambda item: item[1], reverse=True)]
-        # keys = list(counter.keys())
+        heap = []
+        for i in counter:
+            # insert sorted from the highest count to the lowest
+            heappush(heap, (-counter[i], i))
 
-        assert len(keys) > 1
-        first_i = 0
-        second_i = 1
+        result = []
+        previously_appended_result_number = -1
+        while heap:
+            # Get the currently most common number.
+            negative_count_1, number_1 = heappop(heap)
 
-        solution = []
-        while True:
-            solution.append(keys[first_i])
-            counter[keys[first_i]] -= 1
+            # Check if we pushed this the most common number just previously.
+            if previously_appended_result_number != number_1:
 
-            if len(solution) == len(barcodes):
-                return solution
+                # Append to the result and remember the last number.
+                result.append(number_1)
+                previously_appended_result_number = number_1
 
-            if counter[keys[first_i]] == 0:
-                first_i += 1
-                while first_i < len(keys) and (first_i == second_i or counter[keys[first_i]] == 0):
-                    first_i += 1
+                # If there is count left, sort it back to the sorted heap.
+                if negative_count_1 + 1:
+                    heappush(heap, (negative_count_1 + 1, number_1))
 
-                # prevent inserting the last 1 or 2 numbers next to each other
-                if first_i > len(keys) - 1:
-                    insert_i = 0
-                    while len(solution) < len(barcodes):
-                        solution.insert(insert_i, keys[first_i])
-                        insert_i += 2
+            else:
+                # Get the second most common number instead.
+                negative_count_2, number_2 = heappop(heap)
 
-                    assert len(solution) == len(barcodes)
-                    return solution
+                # Append to the result and remember the last number.
+                result.append(number_2)
+                previously_appended_result_number = number_2
 
-            solution.append(keys[second_i])
-            counter[keys[second_i]] -= 1
+                # If there is count left, sort it back to the sorted heap.
+                if negative_count_2 + 1:
+                    heappush(heap, (negative_count_2 + 1, number_2))
 
-            if len(solution) == len(barcodes):
-                return solution
+                # Return the most common number back to sorted heap, making it the most common again.
+                heappush(heap, (negative_count_1, number_1))
 
-            if counter[keys[second_i]] == 0:
-                second_i += 1
-                while second_i < len(keys) and (first_i == second_i or counter[keys[second_i]] == 0):
-                    second_i += 1
-
-                # prevent inserting the last 1 or 2 numbers next to each other
-                if second_i > len(keys) - 1:
-                    insert_i = 0
-                    while len(solution) < len(barcodes):
-                        solution.insert(insert_i, keys[first_i])
-                        insert_i += 2
-
-                    assert len(solution) == len(barcodes)
-                    return solution
+        return result
 
 
 def check(barcodes: List[int]):
@@ -159,7 +124,7 @@ def check(barcodes: List[int]):
 
         previous = n
 
-    return solution
+    return None
 
 
 

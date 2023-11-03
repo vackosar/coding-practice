@@ -37,7 +37,7 @@ class Solution:
         >>> check([2, 1, 1])
 
 
-        # Reasoning about Solution Approaches To Find The Best One Of The Correct Once
+        # Reasoning about Radical Solution Approaches To Find The Best One Of The Correct
 
         It is not possible to do this if there is more than half of one identical number in the array.
         Otherwise, we can simply always be odd-even mixing two different numbers next to each other.

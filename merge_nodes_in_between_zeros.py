@@ -37,6 +37,7 @@ class Solution:
         One just needs to keep reference to the first node of the interval enclosed by zeros.
         Then accumulate the sum until reaching another zero.
         Then just connecting the first node to the next node of the second zero and update the number to the sum.
+        The complexity is O(N).
 
 
         # Risk

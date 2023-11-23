@@ -1,6 +1,7 @@
-import heapq
-
 from utils import NAryTreeNode
+
+
+## Follow Vaclav Kosar for more software and machine learning at https://vaclavkosar.com/
 
 
 class Solution:
@@ -55,28 +56,28 @@ class Solution:
             if node.children is None or len(node.children) == 0:
                 return 0, 0
 
-            longest_sub_branches = []
-            longest_sub_paths = []
+            # Initialize these to 0 to handle the case where there are fewer than two children
+            first_longest = second_longest = 0
+            longest_sub_path = 0
+
             for child in node.children:
-                longest_sub_branch, longest_sub_path = get_two_longest(child)
-                longest_sub_branches.append(longest_sub_branch)
-                longest_sub_paths.append(longest_sub_path)
+                longest_sub_branch, longest_sub_path_child = get_two_longest(child)
 
-            longest_sub_branches = heapq.nlargest(2, longest_sub_branches)
-            longest_sub_path = max(longest_sub_paths)
-            longest_sub_branches = [i + 1 for i in longest_sub_branches]
+                if longest_sub_branch + 1 > first_longest:
+                    second_longest = first_longest
+                    first_longest = longest_sub_branch + 1
+                elif longest_sub_branch + 1 > second_longest:
+                    second_longest = longest_sub_branch + 1
 
-            if len(longest_sub_branches) == 1:
-                longest_path = max(longest_sub_path, longest_sub_branches[0])
+                # Find the maximum sub-path among children
+                longest_sub_path = max(longest_sub_path, longest_sub_path_child)
 
-            else:
-                longest_path = max(longest_sub_branches[0] + longest_sub_branches[1], longest_sub_branches[0], longest_sub_path)
+            # Calculate the longest path that includes this node by considering two largest children branches
+            longest_path = max(first_longest + second_longest, longest_sub_path)
 
-            return longest_sub_branches[0], longest_path
+            return first_longest, longest_path
 
         longest_sub_branch, longest_path = get_two_longest(root)
-
         return longest_path
-
 
 

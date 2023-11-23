@@ -185,28 +185,27 @@ class NAryTreeNode:
 
     def to_list(self) -> list:
         """
-        FIXME: This is not working yet.
-
         >>> NAryTreeNode.to_list(NAryTreeNode(1, [NAryTreeNode(3, [NAryTreeNode(5, []), NAryTreeNode(6, [])]), NAryTreeNode(2, []), NAryTreeNode(4, [])]))
         [1, None, 3, 2, 4, None, 5, 6]
 
-
         >>> NAryTreeNode.to_list(NAryTreeNode(1, [NAryTreeNode(2, [NAryTreeNode(3, [NAryTreeNode(5, [])]), NAryTreeNode(4, [NAryTreeNode(6, [])])])]))
-        [1,None,2,None,3,4,None,5,None,6]
+        [1, None, 2, None, 3, 4, None, 5, None, 6]
 
         >>> NAryTreeNode(1, [NAryTreeNode(2, []), NAryTreeNode(3, [NAryTreeNode(6, [])]), NAryTreeNode(4, []), NAryTreeNode(5, [])]).to_list()
-        [1,None,2,3,4,5,None,None,6]
-
+        [1, None, 2, 3, 4, 5, None, None, 6]
         """
 
         result = []
         queue = deque([self])
+        result.append(self.val)
+        result.append(None)  # Separator.
 
         while queue:
             node = queue.popleft()
-            result.append(node.val)
             for child in node.children:
+                result.append(child.val)
                 queue.append(child)
+
             result.append(None)  # Separator.
 
         # Removing the trailing `None`.

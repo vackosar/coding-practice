@@ -134,6 +134,88 @@ class ListNodeDoublyLinked:
         return f'({self.key}: {self.value})'
 
 
+class NAryTreeNode:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children if children is not None else []
+
+    @staticmethod
+    def from_list(arr: list):
+        """
+        (Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the None value.)
+
+        >>> NAryTreeNode.from_list([1, None, 3, 2, 4, None, 5, 6])
+        NAryTreeNode(1, [NAryTreeNode(3, [NAryTreeNode(5, []), NAryTreeNode(6, [])]), NAryTreeNode(2, []), NAryTreeNode(4, [])])
+
+        >>> NAryTreeNode.from_list([1,None,2,None,3,4,None,5,None,6])
+        NAryTreeNode(1, [NAryTreeNode(2, [NAryTreeNode(3, [NAryTreeNode(5, [])]), NAryTreeNode(4, [NAryTreeNode(6, [])])])])
+
+        >>> NAryTreeNode.from_list([1,None,2,3,4,5,None,None,6])
+        NAryTreeNode(1, [NAryTreeNode(2, []), NAryTreeNode(3, [NAryTreeNode(6, [])]), NAryTreeNode(4, []), NAryTreeNode(5, [])])
+
+        """
+
+        if not arr:
+            return None
+
+        if len(arr) == 1:
+            return NAryTreeNode(arr[0], [])
+
+
+        it = iter(arr)
+        root_val = next(it)
+        root = NAryTreeNode(root_val)
+        queue = [root]
+        next(it)  # Skip None.
+
+        while queue:
+            current = queue.pop(0)
+            for child_val in it:
+                if child_val is None:
+                    break
+                child = NAryTreeNode(child_val)
+                current.children.append(child)
+                queue.append(child)
+
+        return root
+
+
+    def __repr__(self):
+        return f"NAryTreeNode({self.val}, {self.children.__repr__()})"
+
+    def to_list(self) -> list:
+        """
+        FIXME: This is not working yet.
+
+        >>> NAryTreeNode.to_list(NAryTreeNode(1, [NAryTreeNode(3, [NAryTreeNode(5, []), NAryTreeNode(6, [])]), NAryTreeNode(2, []), NAryTreeNode(4, [])]))
+        [1, None, 3, 2, 4, None, 5, 6]
+
+
+        >>> NAryTreeNode.to_list(NAryTreeNode(1, [NAryTreeNode(2, [NAryTreeNode(3, [NAryTreeNode(5, [])]), NAryTreeNode(4, [NAryTreeNode(6, [])])])]))
+        [1,None,2,None,3,4,None,5,None,6]
+
+        >>> NAryTreeNode(1, [NAryTreeNode(2, []), NAryTreeNode(3, [NAryTreeNode(6, [])]), NAryTreeNode(4, []), NAryTreeNode(5, [])]).to_list()
+        [1,None,2,3,4,5,None,None,6]
+
+        """
+
+        result = []
+        queue = deque([self])
+
+        while queue:
+            node = queue.popleft()
+            result.append(node.val)
+            for child in node.children:
+                queue.append(child)
+            result.append(None)  # Separator.
+
+        # Removing the trailing `None`.
+        while result and result[-1] is None:
+            result.pop()
+
+        return result
+
+
 def call_with_inputs(obj, methods, values, expecteds):
     skip_check = False
     if expecteds is None:

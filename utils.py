@@ -140,7 +140,7 @@ class NAryTreeNode:
         self.children = children if children is not None else []
 
     @staticmethod
-    def from_list(arr: list):
+    def from_list(arr: list) -> 'NAryTreeNode':
         """
         (Nary-Tree input serialization is represented in their level order traversal, each group of children is separated by the None value.)
 

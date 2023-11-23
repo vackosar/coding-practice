@@ -37,6 +37,7 @@ class Solution:
 
         - Find the shortest path between all nodes. Complexity O(N**2).
         - Since the path can intersect itself, it can always go through the root, which is the longest option. Thanks to this we need to only find 2 longest paths from the root. To break the problem down, traverse the tree and do the same for each node recursively. Once we have the values of lengths for root we are done. A leaf does not have two paths, so they can be returned both as zero.
+        - TODO Alternative: Avoid intersecting the path: Return the longest path in the subtree, and longest branch in the subtree.
 
         # Implementation
         """

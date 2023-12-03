@@ -84,6 +84,14 @@ if __name__ == '__main__':
     mapping[':'] = 'y'
     print(''.join(mapping.get(c, c) for c in cryptogram))
 
+    # bishop, bee
+    mapping['2'] = 'b'
+    mapping['.'] = 'p'
+    print(''.join(mapping.get(c, c) for c in cryptogram))
+
+    # branch
+    mapping['-'] = 'b'
+    print(''.join(mapping.get(c, c) for c in cryptogram))
 
 
 

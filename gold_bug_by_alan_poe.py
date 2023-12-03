@@ -13,9 +13,6 @@ if __name__ == '__main__':
 
     """
     Decrypt message above, which is most likely a text message encrypted with a simple substitution cipher.
-    
-    Observations:
-    - ; is the most common character, likely a space character.
     """
     cryptogram = cryptogram.replace(' ', '').replace('\n', '')
     print(cryptogram)

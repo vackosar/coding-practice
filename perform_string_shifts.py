@@ -40,6 +40,8 @@ class Solution:
         # Invent Better Alternative Solution
 
         Sum up the shift first, and then apply resulting operation.
+        Since the operation is periodical, then you can only apply modulo.
+        Because of the modulo, you can do this in a single concatenation.
 
         # Mistakes To Avoid
 
@@ -64,18 +66,15 @@ class Solution:
             else:
                 total_shift += amount
 
+        total_shift = total_shift % len(s)
+
         if total_shift == 0:
             return s
 
         elif total_shift < 0:
-
-            for i in range(-total_shift):
-                s = s[1:] + s[0]
-
+            s = s[total_shift:] + s[:total_shift]
             return s
 
         elif total_shift > 0:
-            for i in range(total_shift):
-                s = s[-1] + s[:-1]
-
+            s = s[-total_shift:] + s[:-total_shift]
             return s

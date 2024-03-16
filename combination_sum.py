@@ -1,6 +1,9 @@
 from typing import List
 
 
+## Follow Vaclav Kosar for more software and machine learning at https://vaclavkosar.com/
+
+
 class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         current_combination = [0] * len(candidates)

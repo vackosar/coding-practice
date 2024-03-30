@@ -23,7 +23,6 @@ class Solution:
         shifts: abc -> bca -> cab
         >>> Solution().stringShift("abc", [[0, 1], [1, 2]])
         'cab'
-
         >>> Solution().stringShift("wpdhhcj", [[0,7],[1,7],[1,0],[1,3],[0,3],[0,6],[1,2]])
         'hcjwpdh'
 

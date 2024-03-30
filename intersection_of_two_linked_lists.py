@@ -3,6 +3,9 @@ from typing import Optional
 from utils import ListNode
 
 
+## Follow Vaclav Kosar for more software and machine learning at https://vaclavkosar.com/
+
+
 class Solution:
 
     def getIntersectionNode(self, headA: ListNode, headB: ListNode) -> Optional[ListNode]:

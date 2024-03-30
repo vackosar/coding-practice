@@ -45,7 +45,10 @@ class ListNode:
         return f'({self.val}, {self.next})'
 
     def __eq__(self, other):
-        return self.val == other.val and self.next == other.next
+        return isinstance(other, ListNode) and self.to_list(self) == self.to_list(other)
+
+    def __hash__(self):
+        return hash(tuple(self.to_list(self)))
 
 
 class TreeNode:

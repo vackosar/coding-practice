@@ -1,6 +1,9 @@
 from typing import List
 
 
+## Follow Vaclav Kosar for more software and machine learning at https://vaclavkosar.com/
+
+
 class Solution:
     def convertTemperature(self, celsius: float) -> List[float]:
         """
